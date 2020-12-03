@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <string>
 
-char filePath []= "C:\\Users\\Ruslan\\source\\repos\\coen320\\data.csv";
+char filePath []= "C:\\Users\\Ruslan\\source\\repos\\coen320\\dataTrue.csv";
 double fuelConsumption[94380];
 double engineSpeed[94380];
 double engineCoolantTemperature[94380];
@@ -44,13 +44,21 @@ void creatArrayOfFuelConsumptionValues() {
 
     char line[1024];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
     while (fgets(line, 1024, stream)) {
         char* tmp = strdup(line);
-         fuelConsumption[location] = atof(getfield(tmp, 1));
-         location++;
-         free(tmp);
+        if (count <= 1) {
+            tempHolder = atof(getfield(tmp, 1));
+            count++;
+        }
+        else{
+            fuelConsumption[location] = atof(getfield(tmp, 1));
+            location++;
+        }
+        free(tmp);
     }    
     fclose(stream);
 }
@@ -58,103 +66,159 @@ void creatArrayOfEngineSpeedValues() {
 
     char line[1024];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
     while (fgets(line, 1024, stream)) {
         char* tmp = strdup(line);
-        engineSpeed[location] = atof(getfield(tmp, 13));
-        location++;
+        if (count <= 1) {
+            tempHolder = atof(getfield(tmp, 13));
+            count++;
+        }
+        else {
+            engineSpeed[location] = atof(getfield(tmp, 13));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfEngineCoolantTemperatureValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        engineCoolantTemperature[location] = atof(getfield(tmp, 18));
-        location++;
+        if (count <= 0) {
+            tempHolder = atof(getfield(tmp, 18));
+            count++;
+        }
+        else {
+            engineCoolantTemperature[location] = atof(getfield(tmp, 18));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfCurrentGearValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        currentGear[location] = atof(getfield(tmp, 34));
-        location++;
+        if (count <= 0) {
+            tempHolder = atof(getfield(tmp, 34));
+            count++;
+        }
+        else {
+            currentGear[location] = atof(getfield(tmp, 34));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfTransmissionOilTemperatureValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        transmissionOilTemperature[location] = atof(getfield(tmp, 35));
-        location++;
+        if (count <= 0) {
+            tempHolder = atof(getfield(tmp, 35));
+            count++;
+        }
+        else {
+            transmissionOilTemperature[location] = atof(getfield(tmp, 35));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfVehicleSpeedValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        vehicleSpeed[location] = atof(getfield(tmp, 44));
-        location++;
+        if (count <=0) {
+            tempHolder = atof(getfield(tmp, 44));
+            count++;
+        }
+        else {
+            vehicleSpeed[location] = atof(getfield(tmp, 44));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfAccelerationSpeedLongitudinalValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        accelerationSpeedLongitudinal[location] = atof(getfield(tmp, 45));
-        location++;
+        if (count <= 0) {
+            tempHolder = atof(getfield(tmp, 45));
+            count++;
+        }
+        else {
+            accelerationSpeedLongitudinal[location] = atof(getfield(tmp, 45));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
 }
 void creatArrayOfIndicationOfBreakSwitchValues() {
 
-    char line[1024];
+    char line[2048];
     int location = 0;
+    int count = 0;
+    double tempHolder;
     FILE* stream = fopen(filePath, "r");
 
 
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, 2048, stream)) {
         char* tmp = strdup(line);
-        indicationOfBreakSwitch[location] = atof(getfield(tmp, 46));
-        location++;
+        if (count <= 0) {
+            tempHolder = atof(getfield(tmp, 46));
+            count++;
+        }
+        else {
+            indicationOfBreakSwitch[location] = atof(getfield(tmp, 46));
+            location++;
+        }
         free(tmp);
     }
     fclose(stream);
@@ -162,6 +226,8 @@ void creatArrayOfIndicationOfBreakSwitchValues() {
 
 int main()
 {
+
+
     creatArrayOfFuelConsumptionValues();
     creatArrayOfEngineSpeedValues();
     creatArrayOfEngineCoolantTemperatureValues();
@@ -171,18 +237,8 @@ int main()
     creatArrayOfAccelerationSpeedLongitudinalValues();
     creatArrayOfIndicationOfBreakSwitchValues();
 
-    for (int i = 0; i < 20; i++) {
-        printf("Main output FC %f \n", fuelConsumption[i]);
-        delay(1);
-    }
-    for (int j = 0; j < 10; j++) {
-        printf("Main output ES %f \n", engineSpeed[j]);
-        delay(1);
-    }
-
-    for (int j = 0; j < 10; j++) {
-        printf("Main output EC %f \n", engineCoolantTemperature[j]);
-        delay(1);
+    for (int j = 0; j < 100; j++) {
+        printf("Main output EC %f \n", engineSpeed[j]);
     }
 
   //***** Code to get individual row and column ********//
