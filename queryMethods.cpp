@@ -291,18 +291,26 @@ int main()
 	int i = 0;
     
 
-    //creatArrayOfFuelConsumptionValues();
-    //creatArrayOfEngineSpeedValues();
-    //creatArrayOfEngineCoolantTemperatureValues();
-    //creatArrayOfCurrentGearValues();
-    //creatArrayOfTransmissionOilTemperatureValues();
-    //creatArrayOfVehicleSpeedValues();
-    //creatArrayOfAccelerationSpeedLongitudinalValues();
+    creatArrayOfFuelConsumptionValues();
+    creatArrayOfEngineSpeedValues();
+    creatArrayOfEngineCoolantTemperatureValues();
+    creatArrayOfCurrentGearValues();
+    creatArrayOfTransmissionOilTemperatureValues();
+    creatArrayOfVehicleSpeedValues();
+    creatArrayOfAccelerationSpeedLongitudinalValues();
     creatArrayOfIndicationOfBreakSwitchValues();
-    for (i; i < 100; i++) {
+    printf("Main output FC %f \n", fuelConsumption[100]);
+    printf("Main output FC %f \n", engineSpeed[100]);
+    printf("Main output FC %f \n", engineCoolantTemperature[100]);
+    printf("Main output FC %f \n", currentGear[100]);
+    printf("Main output FC %f \n", transmissionOilTemperature[100]);
+    printf("Main output FC %f \n", vehicleSpeed[100]);
+    printf("Main output FC %f \n", accelerationSpeedLongitudinal[100]);
+    printf("Main output FC %f \n", indicationOfBreakSwitch[100]);
+/*    for (i; i < 100; i++) {
         printf("Main output CG %f \n", indicationOfBreakSwitch[i]);
         printf("Main count %d \n", i);
-    }
+    }*/
   //***** Code to get individual row and column ********//
     //*************************************************//
   /*  char line[1024];
