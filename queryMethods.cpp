@@ -3,19 +3,21 @@
 #include <string.h>
 #include <time.h> 
 #include <ctype.h>
-#include <string>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-char filePath []= "C:\\Users\\Ruslan\\source\\repos\\coen320\\dataTrue.csv";
-double fuelConsumption[94380];
-double engineSpeed[94380];
-double engineCoolantTemperature[94380];
-double currentGear[94380];
-double transmissionOilTemperature[94380];
-double vehicleSpeed[94380];
-double accelerationSpeedLongitudinal[94380];
-double indicationOfBreakSwitch[94380];
+char filePath []= "/public/coen320/dataset.csv";
+double fuelConsumption[94382];
+double engineSpeed[94382];
+double engineCoolantTemperature[94382];
+double currentGear[94382];
+double transmissionOilTemperature[94382];
+double vehicleSpeed[94382];
+double accelerationSpeedLongitudinal[94382];
+double indicationOfBreakSwitch[94382];
 
-void delay(int number_of_seconds)
+void mydelay(int number_of_seconds)
 {
     // Converting time into milli_seconds 
     int milli_seconds = 1000 * number_of_seconds;
@@ -43,204 +45,264 @@ char* getfield(char* line, int column)
 void creatArrayOfFuelConsumptionValues() {
 
     char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
-    while (fgets(line, 1024, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 1) {
-            tempHolder = atof(getfield(tmp, 1));
-            count++;
-        }
-        else{
-            fuelConsumption[location] = atof(getfield(tmp, 1));
-            location++;
-        }
-        free(tmp);
-    }    
-    fclose(stream);
+
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			fuelConsumption[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);		
 }
+
 void creatArrayOfEngineSpeedValues() {
 
     char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 1024, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 1) {
-            tempHolder = atof(getfield(tmp, 13));
-            count++;
-        }
-        else {
-            engineSpeed[location] = atof(getfield(tmp, 13));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			engineSpeed[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
+
 }
 void creatArrayOfEngineCoolantTemperatureValues() {
 
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 0) {
-            tempHolder = atof(getfield(tmp, 18));
-            count++;
-        }
-        else {
-            engineCoolantTemperature[location] = atof(getfield(tmp, 18));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			engineCoolantTemperature[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
+
+
 void creatArrayOfCurrentGearValues() {
 
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 0) {
-            tempHolder = atof(getfield(tmp, 34));
-            count++;
-        }
-        else {
-            currentGear[location] = atof(getfield(tmp, 34));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			currentGear[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
 void creatArrayOfTransmissionOilTemperatureValues() {
-
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 0) {
-            tempHolder = atof(getfield(tmp, 35));
-            count++;
-        }
-        else {
-            transmissionOilTemperature[location] = atof(getfield(tmp, 35));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			transmissionOilTemperature[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
 void creatArrayOfVehicleSpeedValues() {
 
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <=0) {
-            tempHolder = atof(getfield(tmp, 44));
-            count++;
-        }
-        else {
-            vehicleSpeed[location] = atof(getfield(tmp, 44));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			vehicleSpeed[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
 void creatArrayOfAccelerationSpeedLongitudinalValues() {
 
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 0) {
-            tempHolder = atof(getfield(tmp, 45));
-            count++;
-        }
-        else {
-            accelerationSpeedLongitudinal[location] = atof(getfield(tmp, 45));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			accelerationSpeedLongitudinal[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
 void creatArrayOfIndicationOfBreakSwitchValues() {
 
-    char line[2048];
+    char line[1024];
+    char *tmp = strdup(line);
     int location = 0;
     int count = 0;
+    double myval;
     double tempHolder;
-    FILE* stream = fopen(filePath, "r");
+    char myvalues[94382];
+    char buffer[1024];
+    FILE *fp;
 
 
-    while (fgets(line, 2048, stream)) {
-        char* tmp = strdup(line);
-        if (count <= 0) {
-            tempHolder = atof(getfield(tmp, 46));
-            count++;
-        }
-        else {
-            indicationOfBreakSwitch[location] = atof(getfield(tmp, 46));
-            location++;
-        }
-        free(tmp);
-    }
-    fclose(stream);
+	fp = fopen(filePath, "r");
+	if(fp != NULL){
+		printf("Inside if \n");
+		while(fgets(buffer, 1024, fp) != NULL){
+			if(sscanf(buffer, "%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%*lf,%lf", &myval) != 1){
+				printf("scan failed\n");			
+			}
+			indicationOfBreakSwitch[count] = myval;
+			//printf("%f\n",myval);
+			count++;
+			//printf("count value %d\n", count);
+			//mydelay(10);
+			
+		}
+	}	
+		 fclose(fp);
 }
 
 int main()
 {
+	int i = 0;
+    
 
-
-    creatArrayOfFuelConsumptionValues();
-    creatArrayOfEngineSpeedValues();
-    creatArrayOfEngineCoolantTemperatureValues();
-    creatArrayOfCurrentGearValues();
-    creatArrayOfTransmissionOilTemperatureValues();
-    creatArrayOfVehicleSpeedValues();
-    creatArrayOfAccelerationSpeedLongitudinalValues();
+    //creatArrayOfFuelConsumptionValues();
+    //creatArrayOfEngineSpeedValues();
+    //creatArrayOfEngineCoolantTemperatureValues();
+    //creatArrayOfCurrentGearValues();
+    //creatArrayOfTransmissionOilTemperatureValues();
+    //creatArrayOfVehicleSpeedValues();
+    //creatArrayOfAccelerationSpeedLongitudinalValues();
     creatArrayOfIndicationOfBreakSwitchValues();
-
-    for (int j = 0; j < 100; j++) {
-        printf("Main output EC %f \n", engineSpeed[j]);
+    for (i; i < 100; i++) {
+        printf("Main output CG %f \n", indicationOfBreakSwitch[i]);
+        printf("Main count %d \n", i);
     }
-
   //***** Code to get individual row and column ********//
     //*************************************************//
   /*  char line[1024];
