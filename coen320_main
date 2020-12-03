@@ -1,5 +1,5 @@
 // TODO: Get Ruslan's code for the csv file
-// TODO: (Optional) Get specific row data from the CSV file to simulate a more realistic real-time approach
+// TODO: Delete CSV array testing code when Ruslan's code works
 // TODO: Test all threads functioning together
 
 #include <stdio.h>
@@ -24,7 +24,8 @@
 #define OFFSET 1000000
 #define PERIOD 5000000
 #define PERIOD_TASK_SECOND 1000000
-#define PERIOD_TASK_TEN_MICROSECONDS 10000
+#define PERIOD_TASK_TENTH_SECOND 100000
+#define PERIOD_TASK_TEN_MILLISECONDS 10000 //10000us
 sigset_t sigst;
 
 /*-------------------------Function declarations----------------------*/
@@ -317,14 +318,15 @@ struct threadArgs {
 };
 	
 	//Global variables to display
-	int maxVariableCount = 2;	//Use this to end main process once variableCount meets this value
+	// TODO: Change maxVariableCount to 8 when all CSV arrays work!
+	int maxVariableCount = 2;	// Use this to end main process once variableCount meets this value
 	int variableCount = 0;		// Increment until max count is met, and terminate program
 	
 	// TODO: Add all 8 variables here
 	double fuelConsumptionTest = 0;
 	double engineSpeedTest = 0;
 	
-	int index = 0; //TODO: Remove when done!
+	int index = 0; //TODO: Remove when CSV arrays work!
 	
 int main ()
 {
@@ -352,64 +354,61 @@ int main ()
 	// Engine Speed (RPM)
 	args2 = malloc(sizeof(struct threadArgs));
 	args2->period = 3000;
-	memcpy(args2->array, arr2, sizeof(arr2));
+	memcpy(args2->array, arr2, sizeof(arr2));	//TODO: Change to appropriate CSV array
 	args2->globalVar = &engineSpeedTest;
 	
 	// Engine Coolant Temperature
 	args3 = malloc(sizeof(struct threadArgs));
 	args3->period = 2000;
-	memcpy(args3->array, arr2, sizeof(args3));
+	memcpy(args3->array, arr2, sizeof(args3));	//TODO: Change to appropriate CSV array
 	
 	// Current Gear
 	args4 = malloc(sizeof(struct threadArgs));
 	args4->period = 2000;
-	memcpy(args4->array, arr2, sizeof(args4));
+	memcpy(args4->array, arr2, sizeof(args4));	//TODO: Change to appropriate CSV array
 	
 	// Transmission Oil Temperature
 	args5 = malloc(sizeof(struct threadArgs));
 	args5->period = 2000;
-	memcpy(args5->array, arr2, sizeof(args5));
+	memcpy(args5->array, arr2, sizeof(args5));	//TODO: Change to appropriate CSV array
 	
 	// Vehicle Speed
 	args6 = malloc(sizeof(struct threadArgs));
 	args6->period = 2000;
-	memcpy(args6->array, arr2, sizeof(args6));
+	memcpy(args6->array, arr2, sizeof(args6));	//TODO: Change to appropriate CSV array
 	
 	// Acceleration Speed Longitudinal
 	args7 = malloc(sizeof(struct threadArgs));
 	args7->period = 2000;
-	memcpy(args7->array, arr2, sizeof(args7));
+	memcpy(args7->array, arr2, sizeof(args7));	//TODO: Change to appropriate CSV array
 	
 	// Indication of break switchs
-	args8 = malloc(sizeof(struct threadArgs));
+	args8 = malloc(sizeof(struct threadArgs));	
 	args8->period = 2000;
-	memcpy(args8->array, arr2, sizeof(args8));
+	memcpy(args8->array, arr2, sizeof(args8));	//TODO: Change to appropriate CSV array
 	
-	//------------------DOESNT WORK----------------------------
-	// Acquire all values from CSV and parse them into arrays
-	createArrayOfFuelConsumptionValues();
-    createArrayOfEngineSpeedValues();
-    createArrayOfEngineCoolantTemperatureValues();
-    createArrayOfCurrentGearValues();
-    createArrayOfTransmissionOilTemperatureValues();
-    createArrayOfVehicleSpeedValues();
-    createArrayOfAccelerationSpeedLongitudinalValues();
-    createArrayOfIndicationOfBreakSwitchValues();
+	
+//	// Acquire all values from CSV and parse them into arrays
+//	createArrayOfFuelConsumptionValues();
+//    createArrayOfEngineSpeedValues();
+//    createArrayOfEngineCoolantTemperatureValues();
+//    createArrayOfCurrentGearValues();
+//    createArrayOfTransmissionOilTemperatureValues();
+//    createArrayOfVehicleSpeedValues();
+//    createArrayOfAccelerationSpeedLongitudinalValues();
+//    createArrayOfIndicationOfBreakSwitchValues();
     
+    // TODO: Remove this when arrays work!
 	for (index; index < 10; index++) {
         printf("Main output CG %f \n", indicationOfBreakSwitch[index]);
         printf("Main count %d \n", index);
     }
-	//------------------DOESNT WORK----------------------------
-
-
+    //---------------------------------------
 
 	// Global timer thread here
-    printf("-----------------Main Timer Thread Created...\n");	
 	pthread_create(&our_thread_id, NULL, &periodicTimer, NULL);
 	
 	// Consumer thread here
-	printf("-----------------Consumer Thread Created...\n");	
 	pthread_create(NULL, NULL, &consumerDisplay, NULL);
 
 	// Producer threads here
@@ -418,7 +417,6 @@ int main ()
 
 	// Global timer now waiting for other threads to finish
 	pthread_join(our_thread_id, NULL);	
-	printf("-----------------Thread functions completed!\n"); 
  	pause();
 	return EXIT_SUCCESS;
 }
@@ -443,16 +441,8 @@ void *producerReader(void *argPointer) {
 	while (executionCounter < arrSize){
 		double executionPeriod = (double)executionCounter * period;
 		double remainder = doubleCurrentTime - executionPeriod;
-		
-//		printf("-----------------------------------------------\n");
-//		printf("doubleCurrentTime: %f\n", doubleCurrentTime);
-//		printf("executionPeriod: %f\n", executionPeriod);
-//		printf("remainder: %f\n", remainder);
-//		printf("Execution counter: %d\n", executionCounter);
-//		printf("-----------------------------------------------\n");
 			
 		while (1) {
-			// TODO: Change 10 to the period the periodic counter uses!
 			if (remainder > -10 && remainder < 0){		
 				remainder = fabs(remainder);
 				
@@ -487,14 +477,14 @@ void *producerReader(void *argPointer) {
  		executionCounter++;		//Keep track of the number of executions 	
 	}
 	
-	printf("Array reading complete!\n");
 	// Increment counter until all variables are complete
 	// End timer when all variables are read
 	variableCount++;
 	if (variableCount == maxVariableCount) {
+		sleep(1);	//Wait 1s for final values to appear (from consumer) before entire program terminates
 		timerActive = false;	//End periodicTimer thread
 	}
-	free(args);
+	free(args);	//Free memory!
 	return(NULL);
 }
 
@@ -505,8 +495,9 @@ void consumerDisplay() {
 		printf("Fuel Consumption: %f\n", fuelConsumptionTest);
 		printf("Engine Speed: %f\n", engineSpeedTest);
 		printf("-----------------------------------------------\n");
-		sleep(1);
+		nsleep(500000000);	//5ms sleep
 	}
+		printf("-----------------Thread functions completed!\n"); 
 	
 	return(NULL);
 }
@@ -532,12 +523,17 @@ int nsleep(long nsec) {
     return res;
 }
 
+// Periodic timer function taken from 
+// Source : COEN320 Tutorial Week 2: "Week 2: (Part 2) Implementing a periodic task [periodic_task.c]"
+//---------------------Tutorial Code for Periodic Timer--------------------
 // TODO: Change PERIOD with appropriate one to use for the scheduling
 void periodicTimer() {
 	int res;
 	//set and activate a timer
-	res = start_periodic_timer(OFFSET, PERIOD_TASK_SECOND);	//1s
-//	res = start_periodic_timer(OFFSET, PERIOD_TASK_TEN_MICROSECONDS);			//10ms
+	// PERIOD_TASK_SECOND = 1s
+	// PERIOD_TASK_TENTH_SECOND = 0.1s
+	// PERIOD_TASK_TEN_MILLISECONDS = 0.01s = 10ms
+	res = start_periodic_timer(OFFSET, PERIOD_TASK_TEN_MILLISECONDS); //10ms 
 	if (res < 0 ){
 		perror("Start periodic timer");
 		return -1;
@@ -551,9 +547,6 @@ void periodicTimer() {
 	return(NULL);
 }
 
-// Periodic timer function taken from 
-// Source : COEN320 Tutorial Week 2: "Week 2: (Part 2) Implementing a periodic task [periodic_task.c]"
-//---------------------Tutorial Code for Periodic Timer--------------------
 static void wait_next_activation(void) {
 	int dummy;
 	/* suspend calling process until a signal is pending */
@@ -610,9 +603,6 @@ static void task_body(void) {
 	
 	if (cycles > 0) {
 		doubleCurrentTime += (double)(current - start)/cycles;
-		printf("-----------------------------------------------\n");
-		fprintf(stderr, "Ave interval between instances: %f millisecons\n", (double)(current-start)/cycles);
-		printf("-----------------------------------------------\n");
 	}
 	
 	cycles++;
